@@ -5,7 +5,7 @@ import acc from './modules/account';
 
 const controlUnit = {
   
-  isAuth: false,
+  isAuth: true,
   authAs: "Admin",
   loggedIn : (authAs) => {
     acc.init(authAs);

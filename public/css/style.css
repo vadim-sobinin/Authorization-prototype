@@ -82,7 +82,17 @@ section {
   margin-top: 30px;
 }
 
+.edit {
+  cursor: pointer;
+}
 
+.edit-enable:hover {
+  color: green;
+}
+
+.edit-disable:hover {
+  color: red;
+}
 
 .navbar {
   background: none;
