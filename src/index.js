@@ -5,8 +5,26 @@ import acc from './modules/account';
 
 const controlUnit = {
   
-  isAuth: true,
-  authAs: "Admin",
+  isAuth: false,
+  authAs: "",
+
+  init : () => {
+    
+    if (localStorage.getItem("isAuth") == "true"){
+      controlUnit.isAuth = true;
+      controlUnit.authAs = localStorage.getItem("authAs");
+    } else if (localStorage.getItem("isAuth") == ("false" || null)) {
+      controlUnit.isAuth = false;
+    }
+    
+    if (controlUnit.isAuth) {
+      auth.form.style.display = "none";
+      controlUnit.loggedIn(controlUnit.authAs);
+    } else {
+      controlUnit.loggedOut();
+    }
+  },
+
   loggedIn : (authAs) => {
     acc.init(authAs);
   },
@@ -16,12 +34,7 @@ const controlUnit = {
   } 
 };
 
-if (controlUnit.isAuth) {
-  auth.form.style.display = "none";
-  controlUnit.loggedIn(controlUnit.authAs);
-} else {
-  controlUnit.loggedOut();
-}
+controlUnit.init();
 
 
 export default controlUnit;

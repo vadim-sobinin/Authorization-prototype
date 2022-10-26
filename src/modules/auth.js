@@ -133,6 +133,8 @@ const auth = {
     auth.passInput.value = "";
     auth.form.style.display = "none";
     alert("Succsesed login!");
+    localStorage.setItem("isAuth", true); 
+    localStorage.setItem("authAs", auth.authAs); 
     controlUnit.isAuth = true;
     controlUnit.loggedIn(auth.authAs);
   }
