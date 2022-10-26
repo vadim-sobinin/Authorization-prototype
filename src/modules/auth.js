@@ -1,96 +1,102 @@
 "use strict";
+import controlUnit from '../index';
 
-const auth = (isAuth) => {
-  const form = document.querySelector(".form");
-  const header = document.querySelector("h1");
-  const loginInput = document.querySelector('input[placeholder="Email"]');
-  const passInput = document.querySelector('input[placeholder="Password"]');
-  const button = document.querySelector('input[type="submit"]');
-  const link = document.querySelector("a");
+const auth = {
+  authAs: "",
+  form: document.querySelector(".form"),
+  header: document.querySelector("h1"),
+  loginInput: document.querySelector('input[placeholder="Email"]'),
+  passInput: document.querySelector('input[placeholder="Password"]'),
+  button: document.querySelector('input[type="submit"]'),
+  link: document.querySelector("a"),
 
-  let authAs;
+  
+  init: () => {
+    auth.form.style.display = "block";
+    auth.addEventListeners();
+  },
 
-  function addEventListeners() {
-    button.addEventListener("click", () => {
-      if (form.classList[1] === "login") {
-        return signIn();
+  addEventListeners: function () {
+    auth.button.addEventListener("click", () => {
+      if (auth.form.classList[1] === "login") {
+        return auth.signIn();
       } else {
-        signUp();
+        auth.signUp();
       }
     });
 
-    link.addEventListener("click", () => {
-      form.classList[1] === "login"
-        ? changeToRegisterForm()
-        : changeToLoginForm();
+    auth.link.addEventListener("click", () => {
+      auth.form.classList[1] === "login"
+        ? auth.changeToRegisterForm()
+        : auth.changeToLoginForm();
     });
 
-    loginInput.addEventListener("click", () => {
-      loginInput.style.borderColor = "";
+    auth.loginInput.addEventListener("click", () => {
+      auth.loginInput.style.borderColor = "";
     });
 
-    passInput.addEventListener("click", () => {
-      passInput.style.borderColor = "";
+    auth.passInput.addEventListener("click", () => {
+      auth.passInput.style.borderColor = "";
     });
-  }
-  addEventListeners();
+  },
+  // auth.addEventListeners();
 
-  function changeToRegisterForm() {
+  changeToRegisterForm : function () {
     // console.log("Sign up");
-    form.classList.remove("login");
-    form.classList.add("register");
+    auth.form.classList.remove("login");
+    auth.form.classList.add("register");
 
-    link.textContent = "Already registered? Sing in";
-    header.textContent = "Register";
-    button.value = "Register";
-  }
+    auth.link.textContent = "Already registered? Sing in";
+    auth.header.textContent = "Register";
+    auth.button.value = "Register";
+  },
 
-  function changeToLoginForm() {
+  changeToLoginForm: function () {
     // console.log("Sign in");
-    form.classList.remove("register");
-    form.classList.add("login");
+    auth.form.classList.remove("register");
+    auth.form.classList.add("login");
 
-    link.textContent = "New user? Sign up";
-    header.textContent = "Login";
-    button.value = "Login";
-  }
+    auth.link.textContent = "New user? Sign up";
+    auth.header.textContent = "Login";
+    auth.button.value = "Login";
+  },
 
-  function signIn() {
-    const login = loginInput.value;
-    const pass = passInput.value;
+  signIn: function () {
+    const login = auth.loginInput.value;
+    const pass = auth.passInput.value;
 
     if (login === "") {
-      loginInput.style.borderColor = "red";
+      auth.loginInput.style.borderColor = "red";
       alert("Please, enter your login!");
     } else if (pass === "") {
-      passInput.style.borderColor = "red";
+      auth.passInput.style.borderColor = "red";
       alert("Please, enter your password!");
     } else {
       if (localStorage.getItem(login) == null) {
-        loginInput.style.borderColor = "red";
+        auth.loginInput.style.borderColor = "red";
         alert("Username is not correct! Check your username or register!");
       } else {
         if (JSON.parse(localStorage.getItem(login)).pass === pass) {
-          return completedAuth();
+          return auth.completedAuth();
         } else {
-          passInput.style.borderColor = "red";
+          auth.passInput.style.borderColor = "red";
           alert("Password is wrong!");
         }
       }
     }
-  }
+  },
 
-  function alwaysTwoDigits(number) {
+  alwaysTwoDigits: function (number) {
     if (String(number).length === 1) {
       return "0" + number;
     } else {
       return number;
     }
-  }
+  },
 
-  function signUp() {
-    const login = loginInput.value;
-    const pass = passInput.value;
+  signUp: function () {
+    const login = auth.loginInput.value;
+    const pass = auth.passInput.value;
 
     if (login === "") {
       alert("Please, enter your login!");
@@ -99,35 +105,36 @@ const auth = (isAuth) => {
     } else {
       if (localStorage.getItem(login) == null) {
         const date = new Date();
-        let regDate = `${alwaysTwoDigits(date.getDate())}/${alwaysTwoDigits(
+        let regDate = `${auth.alwaysTwoDigits(date.getDate())}/${auth.alwaysTwoDigits(
           date.getMonth() + 1
-        )}/${alwaysTwoDigits(date.getFullYear())} ${alwaysTwoDigits(
+        )}/${auth.alwaysTwoDigits(date.getFullYear())} ${auth.alwaysTwoDigits(
           date.getHours()
-        )}:${alwaysTwoDigits(date.getMinutes())}:${alwaysTwoDigits(
+        )}:${auth.alwaysTwoDigits(date.getMinutes())}:${auth.alwaysTwoDigits(
           date.getSeconds()
         )}`;
 
         localStorage.setItem(login, JSON.stringify({pass, regDate}));
-        loginInput.value = "";
-        passInput.value = "";
+        auth.loginInput.value = "";
+        auth.passInput.value = "";
         alert("Registration was successful! Log in!");
-        changeToLoginForm();
+        auth.changeToLoginForm();
       } else {
         alert("This user is already registered! Try logging in!");
-        loginInput.style.borderColor = "red";
+        auth.loginInput.style.borderColor = "red";
       }
     }
 
-  }
+  },
 
-  function completedAuth() {
-    authAs = loginInput.value;
-    isAuth = true;
-    loginInput.value = "";
-    passInput.value = "";
-    form.style.display = "none";
+  completedAuth: function () {
+    // controlUnit.authAs = auth.loginInput.value;
+    auth.authAs = auth.loginInput.value;
+    auth.loginInput.value = "";
+    auth.passInput.value = "";
+    auth.form.style.display = "none";
     alert("Succsesed login!");
-    return { isAuth, authAs };
+    controlUnit.isAuth = true;
+    controlUnit.loggedIn(auth.authAs);
   }
 };
 

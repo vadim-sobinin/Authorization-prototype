@@ -1,38 +1,48 @@
 'use strict';
+import controlUnit from '../index';
 
-const account = (isAuth, authAs) => {
+const acc =  {
 
-  const account = document.querySelector(".console");
-  console.log(account);
-  account.style.display = "block";
-  const headerUserName = document.querySelector(".navbar-brand");
-  const btnLogOut = document.querySelector("#log-out-btn");
-  const mainUserName = document.querySelector("#username");
-  const userRegData = document.querySelector("#userRegData");
-  const table = document.querySelector("table");
+  authAs: "",
+  account: document.querySelector(".console"),
+  
+  headerUserName: document.querySelector(".navbar-brand"),
+  btnLogOut: document.querySelector("#log-out-btn"),
+  mainUserName: document.querySelector("#username"),
+  userRegData: document.querySelector("#userRegData"),
+  table: document.querySelector("table"),
 
   
-  const addEventListeners = () => {
-    btnLogOut.addEventListener('click', () => {
-      isAuth = false;
+  init: (authAs) => {
+    acc.account.style.display = "block";
+    acc.authAs = authAs;
+    acc.addEventListeners();
+    
+    acc.render();
+  },
+
+  addEventListeners: () => {
+    acc.btnLogOut.addEventListener('click', () => {
+      acc.isAuth = false;
+      acc.authAs = '';
+      controlUnit.authAs = acc.authAs;
+      acc.account.style.display = "none";
+
+      controlUnit.loggedOut();
     });
-  };
+  },
 
   
-  const render = () => {
-    headerUserName.textContent = authAs;
-    mainUserName.textContent = authAs;
-
-  
-
-  // console.log(regDate);
+  render: () => {
+    acc.headerUserName.textContent = acc.authAs;
+    acc.mainUserName.textContent = acc.authAs;
 
 
 
-  };
+  },
 
 
-render();
+// render(),
 };
 
-export default account;
+export default acc;
