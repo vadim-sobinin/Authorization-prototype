@@ -105,7 +105,9 @@ const acc =  {
       reNewPass.style.borderColor = "";
     });
 
-    if (newPass.value != reNewPass.value ||newPass.value === "") {
+    if (newPass.value == ""){
+      alert("Please enter new password!");
+    } else if (newPass.value != reNewPass.value ||newPass.value === "") {
       reNewPass.style.borderColor = "red";
       alert("Passwords don't match, check again!");
     } else {
