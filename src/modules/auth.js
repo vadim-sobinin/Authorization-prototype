@@ -1,5 +1,5 @@
 "use strict";
-import controlUnit from '../index';
+import controlUnit from "../index";
 
 const auth = {
   authAs: "",
@@ -10,7 +10,6 @@ const auth = {
   button: document.querySelector('input[type="submit"]'),
   link: document.querySelector("a"),
 
-  
   init: () => {
     auth.form.style.display = "block";
     auth.addEventListeners();
@@ -41,7 +40,7 @@ const auth = {
   },
   // auth.addEventListeners();
 
-  changeToRegisterForm : function () {
+  changeToRegisterForm: function () {
     // console.log("Sign up");
     auth.form.classList.remove("login");
     auth.form.classList.add("register");
@@ -99,22 +98,31 @@ const auth = {
     const pass = auth.passInput.value;
 
     if (login === "") {
-      alert("Please, enter your login!");
+      auth.loginInput.style.borderColor = "red";
+      alert("Please, enter your email!");
+    } else if (
+      !/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/gi.test(
+        login
+      )
+    ) {
+      auth.loginInput.style.borderColor = "red";
+      alert("Email is not valid!");
     } else if (pass === "") {
+      auth.passInput.style.borderColor = "red";
       alert("Please, enter your password!");
     } else {
       if (localStorage.getItem(login) == null) {
         const date = new Date();
-        let regDate = `${auth.alwaysTwoDigits(date.getDate())}/${auth.alwaysTwoDigits(
-          date.getMonth() + 1
-        )}/${auth.alwaysTwoDigits(date.getFullYear())} ${auth.alwaysTwoDigits(
-          date.getHours()
-        )}:${auth.alwaysTwoDigits(date.getMinutes())}:${auth.alwaysTwoDigits(
-          date.getSeconds()
-        )}`;
+        let regDate = `${auth.alwaysTwoDigits(
+          date.getDate()
+        )}/${auth.alwaysTwoDigits(date.getMonth() + 1)}/${auth.alwaysTwoDigits(
+          date.getFullYear()
+        )} ${auth.alwaysTwoDigits(date.getHours())}:${auth.alwaysTwoDigits(
+          date.getMinutes()
+        )}:${auth.alwaysTwoDigits(date.getSeconds())}`;
 
-        localStorage.setItem(login, JSON.stringify({pass, regDate}));
-        auth.loginInput.value = "";
+        localStorage.setItem(login, JSON.stringify({ pass, regDate }));
+        // auth.loginInput.value = "";
         auth.passInput.value = "";
         alert("Registration was successful! Log in!");
         auth.changeToLoginForm();
@@ -123,7 +131,6 @@ const auth = {
         auth.loginInput.style.borderColor = "red";
       }
     }
-
   },
 
   completedAuth: function () {
@@ -133,11 +140,11 @@ const auth = {
     auth.passInput.value = "";
     auth.form.style.display = "none";
     alert("Succsesed login!");
-    localStorage.setItem("isAuth", true); 
-    localStorage.setItem("authAs", auth.authAs); 
+    localStorage.setItem("isAuth", true);
+    localStorage.setItem("authAs", auth.authAs);
     controlUnit.isAuth = true;
     controlUnit.loggedIn(auth.authAs);
-  }
+  },
 };
 
 export default auth;
