@@ -40,7 +40,9 @@
         <nav class="navbar bg-light">
           <div class="container-xxl">
             <a class="navbar-brand">UserName</a>
-            <form class="d-flex" role="search">
+            
+            <form class="d-flex">
+              <div class="permission">Permission:<span id="userPermission">Test</span></div>
               <button id="log-out-btn" class="btn btn-outline-danger" type="submit">Log out</button>
             </form>
           </div>
@@ -50,16 +52,16 @@
       <section>
         <div class="container-xxl" >
           <div class="row">
-            <div class="col">
+            <div class="col-3">
               <h2>Yoy are logged in as </h2>
             </div>
-            <div class="col">
+            <div class="col-3">
               <h2 id="username">admin@login.com</h2>
             </div>
-            <div class="col">
+            <div class="col-2">
               <h2>Registered</h2> 
             </div>
-            <div class="col">
+            <div class="col-4">
               <h2 id="userRegData">25/10/2022 19:21:33</h2> 
             </div>
           </div>
@@ -74,6 +76,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Email</th>
                 <th scope="col">Registered</th>
+                <th scope="col">Permission</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -96,6 +99,11 @@
                 <div class="mb-3">
                   <label for="user-email" class="col-form-label">User Email:</label>
                   <input type="text" class="form-control" id="user-email">
+                </div>
+                <div class="switch-div">
+                  <span class="switch-span" >User</span>
+                  <div class="switch-btn" data-id="#bl-1"></div>
+                  <span class="switch-span">Admin</span>
                 </div>
                 <div class="mb-3">
                   <label for="message-text" class="col-form-label">Enter new password:</label>
