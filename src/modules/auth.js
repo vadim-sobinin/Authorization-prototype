@@ -12,13 +12,12 @@ const auth = {
 
   init: () => {
     auth.form.style.display = "block";
-    auth.addEventListeners();
   },
 
   addEventListeners: function () {
     auth.button.addEventListener("click", () => {
       if (auth.form.classList[1] === "login") {
-        return auth.signIn();
+        auth.signIn();
       } else {
         auth.signUp();
       }
@@ -66,7 +65,7 @@ const auth = {
 
     if (login === "") {
       auth.loginInput.style.borderColor = "red";
-      alert("Please, enter your login!");
+      // alert("Please, enter your login!");
     } else if (pass === "") {
       auth.passInput.style.borderColor = "red";
       alert("Please, enter your password!");
@@ -93,6 +92,18 @@ const auth = {
     }
   },
 
+  getRegDate: () => {
+    const date = new Date();
+    const regDate = `${auth.alwaysTwoDigits(
+      date.getDate()
+    )}/${auth.alwaysTwoDigits(date.getMonth() + 1)}/${auth.alwaysTwoDigits(
+      date.getFullYear()
+    )} ${auth.alwaysTwoDigits(date.getHours())}:${auth.alwaysTwoDigits(
+      date.getMinutes()
+    )}:${auth.alwaysTwoDigits(date.getSeconds())}`;
+    return regDate;
+  },
+
   signUp: function () {
     const login = auth.loginInput.value;
     const pass = auth.passInput.value;
@@ -112,16 +123,14 @@ const auth = {
       alert("Please, enter your password!");
     } else {
       if (localStorage.getItem(login) == null) {
-        const date = new Date();
-        let regDate = `${auth.alwaysTwoDigits(
-          date.getDate()
-        )}/${auth.alwaysTwoDigits(date.getMonth() + 1)}/${auth.alwaysTwoDigits(
-          date.getFullYear()
-        )} ${auth.alwaysTwoDigits(date.getHours())}:${auth.alwaysTwoDigits(
-          date.getMinutes()
-        )}:${auth.alwaysTwoDigits(date.getSeconds())}`;
-
-        localStorage.setItem(login, JSON.stringify({ pass, regDate }));
+        localStorage.setItem(
+          login,
+          JSON.stringify({
+            pass,
+            regDate: auth.getRegDate(),
+            permission: "user",
+          })
+        );
         // auth.loginInput.value = "";
         auth.passInput.value = "";
         alert("Registration was successful! Log in!");
